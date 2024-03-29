@@ -52,14 +52,16 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("com.google.dagger:hilt-android:2.50")
-    kapt("com.google.dagger:hilt-android-compiler:2.50")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+
+    implementation(libs.androidx.swiperefreshlayout)
 
 
     implementation(libs.androidx.recyclerview)

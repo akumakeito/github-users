@@ -19,6 +19,9 @@ object DatabaseModule {
     fun provideUserDao(appDb: AppDb) = appDb.usersDao()
 
     @Provides
+    fun provideUserRemoteKeyDao(appDb: AppDb) = appDb.userRemoteKeyDao()
+
+    @Provides
     @Singleton
     fun provideAppDb(
         @ApplicationContext context: Context,

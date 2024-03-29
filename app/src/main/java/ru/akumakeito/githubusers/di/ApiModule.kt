@@ -15,7 +15,7 @@ const val BASE_URL = "https://api.github.com/"
 
 @InstallIn(SingletonComponent::class)
 @Module
-interface ApiModule {
+class ApiModule {
     @Provides
     @Singleton
     fun providesGson(): Gson = Gson()
@@ -32,9 +32,14 @@ interface ApiModule {
 
 
     @Provides
-    fun provideProductApiService(gson: Gson): GithubUsersApiService = Retrofit.Builder()
+    fun provideProductApiService(
+        gson: Gson,
+        okHttpClient: OkHttpClient
+    ): GithubUsersApiService = Retrofit.Builder()
         .baseUrl(BASE_URL)
+        .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
         .create(GithubUsersApiService::class.java)
+
 }
