@@ -12,13 +12,16 @@ interface UserRemoteKeyDao {
     suspend fun isEmpty() : Boolean
 
     @Query("SELECT MAX(sinceId) FROM UserRemoteKeyEntity")
-    suspend fun max() :Long?
+    suspend fun max() : Int?
 
     @Query("SELECT MIN(sinceId) FROM UserRemoteKeyEntity")
-    suspend fun min() :Long?
+    suspend fun min() :Int?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(key : UserRemoteKeyEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(keys : List<UserRemoteKeyEntity>)
 
     @Query("DELETE FROM UserRemoteKeyEntity")
     suspend fun removeAll()
