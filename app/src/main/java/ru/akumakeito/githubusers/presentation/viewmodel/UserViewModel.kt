@@ -42,9 +42,6 @@ class UserViewModel @Inject constructor(
 
     }
 
-    fun getUserList() = viewModelScope.launch {
-        repository.getUserListSince(46)
-    }
 
     fun getUserByUsername(username: String) = viewModelScope.launch {
         try {

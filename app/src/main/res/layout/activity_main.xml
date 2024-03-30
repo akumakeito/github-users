@@ -8,17 +8,6 @@
     android:orientation="vertical"
     tools:context=".presentation.MainActivity">
 
-    <Button
-        android:id="@+id/btn_user_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user list" />
-
-    <Button
-        android:id="@+id/btn_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

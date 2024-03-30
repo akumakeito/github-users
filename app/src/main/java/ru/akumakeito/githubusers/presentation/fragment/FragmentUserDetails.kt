@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.akumakeito.githubusers.R
 import ru.akumakeito.githubusers.databinding.FragmentUserInfoBinding
 import ru.akumakeito.githubusers.domain.model.User
+import ru.akumakeito.githubusers.presentation.Utils
 import ru.akumakeito.githubusers.presentation.viewmodel.UserViewModel
 
 @AndroidEntryPoint
@@ -19,13 +20,14 @@ class FragmentUserDetails : Fragment() {
 
     val viewModel : UserViewModel by viewModels()
     private lateinit var binding : FragmentUserInfoBinding
-    private lateinit var user : User
+
 
     private val args : FragmentUserDetailsArgs by navArgs()
     private val username : String by lazy {
         args.username
     }
 
+    private lateinit var user : User
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +58,9 @@ class FragmentUserDetails : Fragment() {
             tvOrganization.text = user.company
             tvFollowersCount.text = getString(R.string.followers_count, user.followers)
             tvFollowingCount.text = getString(R.string.following_count, user.following)
+            tvAccountCreationDate.text = Utils.convertStringToDateStrin(user.createdAt)
+
+
 
 
         }
