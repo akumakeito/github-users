@@ -2,7 +2,7 @@
     <string name="app_name">GitHubUsers</string>
     <string name="github_user_list">GitHub user list</string>
     <string name="avatar">avatar</string>
-    <string name="following_count">%1$s following</string>
-    <string name="followers_count">%1$s followers</string>
+    <string name="following_count">%1$d following</string>
+    <string name="followers_count">%1$d followers</string>
 
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentUserList">
+
+    <fragment
+        android:id="@+id/fragmentUserDetails"
+        android:name="ru.akumakeito.githubusers.presentation.fragment.FragmentUserDetails"
+        android:label="FragmentUserDetails">
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentUserList"
+        android:name="ru.akumakeito.githubusers.presentation.fragment.FragmentUserList"
+        android:label="FragmentUserList">
+        <action
+            android:id="@+id/action_fragmentUserList_to_fragmentUserDetails"
+            app:destination="@id/fragmentUserDetails">
+
+        </action>
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ru.akumakeito.githubusers.presentation.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>
