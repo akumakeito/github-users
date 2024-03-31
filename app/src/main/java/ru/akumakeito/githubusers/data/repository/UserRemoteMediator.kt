@@ -45,6 +45,8 @@ class UserRemoteMediator @Inject constructor(
 
             val body = response.body() ?: throw Exception("response body is null")
 
+            Log.d("UserRemoteMediator", "body: $body")
+
 
             usersDao.insert(body.toEntity())
 
