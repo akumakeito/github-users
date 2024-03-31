@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs")
+
 }
 
 android {
@@ -81,6 +82,7 @@ dependencies {
 
 
     implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
 
     implementation(libs.androidx.paging.runtime)

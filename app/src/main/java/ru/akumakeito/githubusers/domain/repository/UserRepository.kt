@@ -9,8 +9,8 @@ interface UserRepository {
 
     val data : Flow<PagingData<User>>
 
-    suspend fun getUserList(): List<User>
-    suspend fun getUserListSince(sinceId : Int): List<User>
+    suspend fun getUserList()
+    suspend fun getUserListSince(sinceId : Int)
 
     suspend fun getUserByUsername(username : String): User
 }

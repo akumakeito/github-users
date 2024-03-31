@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.akumakeito.githubusers.databinding.FragmentUserListBinding
 import ru.akumakeito.githubusers.domain.model.User
@@ -19,11 +21,11 @@ import ru.akumakeito.githubusers.presentation.adapter.UserAdapter
 import ru.akumakeito.githubusers.presentation.viewmodel.UserViewModel
 
 @AndroidEntryPoint
-class FragmentUserList :Fragment() {
+class FragmentUserList : Fragment() {
 
-    val viewModel : UserViewModel by viewModels()
-    private lateinit var binding : FragmentUserListBinding
-    private lateinit var adapter : UserAdapter
+    val viewModel: UserViewModel by viewModels()
+    private lateinit var binding: FragmentUserListBinding
+    private lateinit var adapter: UserAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +36,7 @@ class FragmentUserList :Fragment() {
 
         binding = FragmentUserListBinding.inflate(inflater, container, false)
 
-        adapter = UserAdapter( object : OnInteractionListener {
+        adapter = UserAdapter(object : OnInteractionListener {
             override fun onUserClicked(user: User) {
                 findNavController().navigate(
                     FragmentUserListDirections.actionFragmentUserListToFragmentUserDetails(
@@ -45,10 +47,7 @@ class FragmentUserList :Fragment() {
             }
         })
 
-        binding.rvUserList.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = PagingLoadStateAdapter(),
-            footer = PagingLoadStateAdapter(),
-        )
+        binding.rvUserList.adapter = adapter
         return binding.root
     }
 
@@ -56,7 +55,7 @@ class FragmentUserList :Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            viewModel.userList.collect{
+            viewModel.userList.collect {
                 adapter.submitData(it)
             }
         }
@@ -71,7 +70,18 @@ class FragmentUserList :Fragment() {
             adapter.refresh()
             binding.swiperefresh.isRefreshing = false
         }
+        binding.rvUserList.apply {
+            itemAnimator = null
+        }
 
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { state ->
+                binding.swiperefresh.isRefreshing =
+                    state.refresh is LoadState.Loading
+
+
+            }
+        }
 
     }
 

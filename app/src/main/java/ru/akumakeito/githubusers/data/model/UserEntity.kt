@@ -9,17 +9,17 @@ import ru.akumakeito.githubusers.domain.model.User
 @Entity
 data class UserEntity(
     @PrimaryKey
-    val login: String,
     val id: Int,
+    val login: String,
     @ColumnInfo(name = "avatar_url")
-    val avatarUrl: String,
-    val name: String,
+    val avatarUrl: String?,
+    val name: String?,
     val company: String?,
     val email: String?,
     val followers: Int,
     val following: Int,
     @ColumnInfo(name = "created_at")
-    val createdAt: String,
+    val createdAt: String?,
 ) {
 
     companion object {

@@ -6,36 +6,36 @@ data class UserResponse(
     val login: String,
     val id: Int,
     @ColumnInfo(name = "node_id")
-    val nodeId: String,
+    val nodeId: String?,
     @ColumnInfo(name = "avatar_url")
-    val avatarUrl: String,
+    val avatarUrl: String?,
     @ColumnInfo(name = "gravatar_id")
-    val gravatarId: String,
-    val url : String,
+    val gravatarId: String?,
+    val url : String?,
     @ColumnInfo(name = "html_url")
-    val htmlUrl : String,
+    val htmlUrl : String?,
     @ColumnInfo(name = "followers_url")
-    val followersUrl : String,
+    val followersUrl : String?,
     @ColumnInfo(name = "following_url")
-    val followingUrl : String,
+    val followingUrl : String?,
     @ColumnInfo(name = "gists_url")
-    val gistsUrl : String,
+    val gistsUrl : String?,
     @ColumnInfo(name = "starred_url")
-    val starredUrl : String,
+    val starredUrl : String?,
     @ColumnInfo(name = "subscriptions_url")
-    val subscriptionsUrl : String,
+    val subscriptionsUrl : String?,
     @ColumnInfo(name = "organizations_url")
-    val organizationsUrl : String,
+    val organizationsUrl : String?,
     @ColumnInfo(name = "repos_url")
-    val reposUrl : String,
+    val reposUrl : String?,
     @ColumnInfo(name = "events_url")
-    val eventsUrl : String,
+    val eventsUrl : String?,
     @ColumnInfo(name = "received_events_url")
-    val receivedEventsUrl : String,
-    val type : String,
+    val receivedEventsUrl : String?,
+    val type : String?,
     @ColumnInfo(name = "site_admin")
-    val siteAdmin : Boolean,
-    val name : String,
+    val siteAdmin : Boolean?,
+    val name : String?,
     val company : String?,
     val blog : String?,
     val location : String?,
@@ -51,7 +51,7 @@ data class UserResponse(
     val followers : Int,
     val following : Int,
     @ColumnInfo(name = "created_at")
-    val createdAt : String,
+    val createdAt : String?,
     @ColumnInfo(name = "updated_at")
-    val updatedAt : String
+    val updatedAt : String?
 )

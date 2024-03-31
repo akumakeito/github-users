@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.akumakeito.githubusers.R
 import ru.akumakeito.githubusers.presentation.viewmodel.UserViewModel
@@ -23,14 +24,6 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-
-        findViewById<Button>(R.id.btn_user).setOnClickListener {
-           viewModel.getUserByUsername("akumakeito")
-        }
-
-        findViewById<Button>(R.id.btn_user_list).setOnClickListener {
-            viewModel.getUserList()
         }
 
     }

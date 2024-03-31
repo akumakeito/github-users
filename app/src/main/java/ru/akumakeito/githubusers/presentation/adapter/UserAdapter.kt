@@ -1,5 +1,6 @@
 package ru.akumakeito.githubusers.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -34,13 +35,15 @@ class UserDiffCallback : DiffUtil.ItemCallback<User>() {
         if (oldItem::class != newItem::class) {
             return false
         }
-            return oldItem.login == newItem.login
 
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
-
+    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+        return oldItem == newItem
+    }
 }
+
 
 class UserViewHolder(
     private val onInteractionListener: OnInteractionListener,
@@ -56,6 +59,8 @@ class UserViewHolder(
                 .placeholder(R.drawable.ic_avatar_placeholder)
                 .error(R.drawable.baseline_error_24)
                 .into(ivAvatar)
+
+            Log.d("UserRemoteMediator", "user id: ${user.id}")
 
             tvLogin.text = user.login
             tvUserId.text = user.id.toString()

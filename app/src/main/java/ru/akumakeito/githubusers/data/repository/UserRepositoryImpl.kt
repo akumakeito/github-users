@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.akumakeito.githubusers.data.dao.UsersDao
 import ru.akumakeito.githubusers.data.model.UserEntity
+import ru.akumakeito.githubusers.data.model.toEntity
 import ru.akumakeito.githubusers.domain.model.User
 import ru.akumakeito.githubusers.domain.repository.UserRepository
 import ru.akumakeito.githubusers.network.GithubUsersApiService
@@ -23,16 +24,48 @@ class UserRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override val data: Flow<PagingData<User>> = Pager(
         config = PagingConfig(
-            pageSize = 20,
+            pageSize = 5,
             enablePlaceholders = false
         ),
         pagingSourceFactory = usersDao::pagingSource,
         remoteMediator = remoteMediator
     ).flow
-        .map {it.map(UserEntity::fromEntityToUser)}
+        .map {
+            it.map(UserEntity::fromEntityToUser)
+        }
 
-    override suspend fun getUserList(): List<User> = TODO()
-    override suspend fun getUserListSince(sinceId: Int): List<User> = TODO()
+    override suspend fun getUserList() {
+        try {
+            val response = apiService.getUserList()
+            if (!response.isSuccessful) {
+                throw Exception("response is not successful")
+            }
+
+            val body = response.body() ?: throw Exception("response body is null")
+            if (usersDao.isEmpty()) {
+                usersDao.insert(body.toEntity())
+            }
+
+//            if  (body.first().id > (userRemoteKeyDao.max() ?: 0)) {
+//                usersDao.insert(body.toEntity())
+//            }
+        } catch (e : Exception) {
+            throw e.message?.let { Exception(it) } ?: Exception("Unknown error")
+        }
+    }
+    override suspend fun getUserListSince(sinceId: Int) {
+        try {
+            val response = apiService.getUserListSince(sinceId)
+            if (!response.isSuccessful) {
+                throw Exception("response is not successful")
+            }
+            val body = response.body() ?: throw Exception("response body is null")
+            usersDao.insert(body.toEntity())
+
+        } catch (e : Exception) {
+            throw e.message?.let { Exception(it) } ?: Exception("Unknown error")
+        }
+    }
 
     override suspend fun getUserByUsername(username: String): User = TODO()
 }

@@ -1,11 +1,14 @@
 package ru.akumakeito.githubusers.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide.init
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.akumakeito.githubusers.domain.model.StateModel
@@ -31,6 +34,9 @@ class UserViewModel @Inject constructor(
     }
 
     private fun loadUsers() {
+        viewModelScope.launch {
+            Log.d("room" , "userList = ${userList.last()}")
+        }
         _state.update {
             it.copy(
                 loading = true

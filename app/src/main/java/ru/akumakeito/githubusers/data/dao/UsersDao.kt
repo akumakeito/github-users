@@ -14,11 +14,15 @@ interface UsersDao {
     suspend fun isEmpty() : Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(post: UserEntity)
+    suspend fun insert(user: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(posts : List<UserEntity>)
+    suspend fun insert(users : List<UserEntity>)
 
-    @Query("SELECT * FROM UserEntity ORDER BY id DESC")
+
+    @Query("SELECT * FROM UserEntity ORDER BY id ASC")
     fun pagingSource(): PagingSource<Int, UserEntity>
+
+    @Query("SELECT MAX(id) FROM UserEntity")
+    suspend fun max() : Int?
 }

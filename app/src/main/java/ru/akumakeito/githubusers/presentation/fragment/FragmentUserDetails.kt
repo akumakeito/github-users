@@ -18,16 +18,16 @@ import ru.akumakeito.githubusers.presentation.viewmodel.UserViewModel
 @AndroidEntryPoint
 class FragmentUserDetails : Fragment() {
 
-    val viewModel : UserViewModel by viewModels()
-    private lateinit var binding : FragmentUserInfoBinding
+    val viewModel: UserViewModel by viewModels()
+    private lateinit var binding: FragmentUserInfoBinding
 
 
-    private val args : FragmentUserDetailsArgs by navArgs()
-    private val username : String by lazy {
+    private val args: FragmentUserDetailsArgs by navArgs()
+    private val username: String by lazy {
         args.username
     }
 
-    private lateinit var user : User
+    private lateinit var user: User
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +36,9 @@ class FragmentUserDetails : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentUserInfoBinding.inflate(inflater, container, false)
+
+
+        viewModel.getUserByUsername(username)
 
         user = viewModel.currentUser.value ?: throw Exception("User not found")
 
@@ -47,7 +50,7 @@ class FragmentUserDetails : Fragment() {
 
         binding.apply {
 
-            Glide.with(ivAvatar)
+            Glide.with(this@FragmentUserDetails)
                 .load(user.avatarUrl)
                 .placeholder(R.drawable.ic_avatar_placeholder)
                 .error(R.drawable.baseline_error_24)
@@ -55,12 +58,17 @@ class FragmentUserDetails : Fragment() {
 
             tvName.text = user.name
             tvEmail.text = user.email
-            tvOrganization.text = user.company
+            if (user.company != null) {
+                tvOrganization.text = user.company
+            } else {
+                tvOrganization.visibility = View.GONE
+            }
+
             tvFollowersCount.text = getString(R.string.followers_count, user.followers)
             tvFollowingCount.text = getString(R.string.following_count, user.following)
-            tvAccountCreationDate.text = Utils.convertStringToDateStrin(user.createdAt)
 
-
+            tvAccountCreationDate.text =
+                if (user.createdAt != null) Utils.convertStringToDateStrin(user.createdAt!!) else "no date"
 
 
         }

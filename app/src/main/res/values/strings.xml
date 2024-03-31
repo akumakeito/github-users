@@ -4,5 +4,6 @@
     <string name="avatar">avatar</string>
     <string name="following_count">%1$d following</string>
     <string name="followers_count">%1$d followers</string>
+    <string name="retry">Retry</string>
 
 </resources>
