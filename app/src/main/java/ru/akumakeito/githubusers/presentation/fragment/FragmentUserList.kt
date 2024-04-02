@@ -10,14 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.akumakeito.githubusers.databinding.FragmentUserListBinding
 import ru.akumakeito.githubusers.domain.model.User
 import ru.akumakeito.githubusers.presentation.adapter.OnInteractionListener
-import ru.akumakeito.githubusers.presentation.adapter.PagingLoadStateAdapter
 import ru.akumakeito.githubusers.presentation.adapter.UserAdapter
 import ru.akumakeito.githubusers.presentation.viewmodel.UserViewModel
 
@@ -32,7 +30,7 @@ class FragmentUserList : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentUserListBinding.inflate(inflater, container, false)
@@ -77,9 +75,7 @@ class FragmentUserList : Fragment() {
             adapter.refresh()
             binding.swiperefresh.isRefreshing = false
         }
-        binding.rvUserList.apply {
-            itemAnimator = null
-        }
+
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { state ->

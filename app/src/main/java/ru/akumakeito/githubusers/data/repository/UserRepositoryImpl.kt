@@ -1,6 +1,5 @@
 package ru.akumakeito.githubusers.data.repository
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -48,9 +47,6 @@ class UserRepositoryImpl @Inject constructor(
                 usersDao.insert(body.toEntity())
             }
 
-//            if  (body.first().id > (userRemoteKeyDao.max() ?: 0)) {
-//                usersDao.insert(body.toEntity())
-//            }
         } catch (e : Exception) {
             throw e.message?.let { Exception(it) } ?: Exception("Unknown error")
         }
@@ -77,11 +73,7 @@ class UserRepositoryImpl @Inject constructor(
             }
             val body = response.body() ?: throw Exception("response body is null")
 
-            Log.d("FragmentUserDetails", "user = ${body}")
             usersDao.insert(fromUserResponseToEntity(body))
-
-            val user = usersDao.getUserByID(body.id).fromEntityToUser()
-            Log.d("FragmentUserDetails", "repo returns user = ${user}")
 
             return usersDao.getUserByID(body.id).fromEntityToUser()
 
