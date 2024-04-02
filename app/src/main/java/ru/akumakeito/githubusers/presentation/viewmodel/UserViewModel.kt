@@ -51,10 +51,14 @@ class UserViewModel @Inject constructor(
 
     fun getUserByUsername(username: String) = viewModelScope.launch {
         try {
+            Log.d("FragmentUserDetails", "before update username = ${_currentUser.value}")
+
 
             _currentUser.update {
                 repository.getUserByUsername(username)
             }
+
+            Log.d("FragmentUserDetails", "after update username = ${_currentUser.value}")
         } catch (e: Exception) {
 
         }

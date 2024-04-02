@@ -1,5 +1,6 @@
 package ru.akumakeito.githubusers.data.repository
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.akumakeito.githubusers.data.dao.UsersDao
 import ru.akumakeito.githubusers.data.model.UserEntity
+import ru.akumakeito.githubusers.data.model.UserEntity.Companion.fromUserResponseToEntity
 import ru.akumakeito.githubusers.data.model.toEntity
 import ru.akumakeito.githubusers.domain.model.User
 import ru.akumakeito.githubusers.domain.repository.UserRepository
@@ -67,5 +69,24 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserByUsername(username: String): User = TODO()
+    override suspend fun getUserByUsername(username: String): User {
+        try {
+            val response = apiService.getUserByUsername(username)
+            if (!response.isSuccessful) {
+                throw Exception("response is not successful")
+            }
+            val body = response.body() ?: throw Exception("response body is null")
+
+            Log.d("FragmentUserDetails", "user = ${body}")
+            usersDao.insert(fromUserResponseToEntity(body))
+
+            val user = usersDao.getUserByID(body.id).fromEntityToUser()
+            Log.d("FragmentUserDetails", "repo returns user = ${user}")
+
+            return usersDao.getUserByID(body.id).fromEntityToUser()
+
+        } catch (e : Exception) {
+            throw e.message?.let { Exception(it) } ?: Exception("Unknown error")
+        }
+    }
 }

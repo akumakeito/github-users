@@ -20,6 +20,10 @@
         <action
             android:id="@+id/action_fragmentUserList_to_fragmentUserDetails"
             app:destination="@id/fragmentUserDetails">
+            <argument
+                android:name="username"
+                app:argType="string"
+                app:nullable="false" />
 
         </action>
     </fragment>

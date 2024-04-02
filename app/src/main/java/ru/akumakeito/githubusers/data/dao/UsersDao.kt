@@ -13,6 +13,9 @@ interface UsersDao {
     @Query("SELECT COUNT(*) == 0 FROM UserEntity")
     suspend fun isEmpty() : Boolean
 
+    @Query("SELECT * FROM UserEntity WHERE id = :id")
+    suspend fun getUserByID(id : Int) : UserEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: UserEntity)
 

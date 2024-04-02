@@ -1,6 +1,7 @@
 package ru.akumakeito.githubusers.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,10 @@ class FragmentUserList : Fragment() {
 
         adapter = UserAdapter(object : OnInteractionListener {
             override fun onUserClicked(user: User) {
+                Log.d("FragmentUserDetails", "user = $user")
+
+                Log.d("FragmentUserDetails", "before navigation")
+
                 findNavController().navigate(
                     FragmentUserListDirections.actionFragmentUserListToFragmentUserDetails(
                         user.login
@@ -46,6 +51,8 @@ class FragmentUserList : Fragment() {
                 )
             }
         })
+
+
 
         binding.rvUserList.adapter = adapter
         return binding.root
