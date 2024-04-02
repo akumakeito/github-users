@@ -26,7 +26,7 @@ class UserRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override val data: Flow<PagingData<User>> = Pager(
         config = PagingConfig(
-            pageSize = 5,
+            pageSize = 10,
             enablePlaceholders = false
         ),
         pagingSourceFactory = usersDao::pagingSource,
